@@ -1,0 +1,7 @@
+[allowlist]
+# These are test keys for training only
+
+paths = [
+    "controller/id_ed25519",
+    "keys/id_ed25519",
+]
