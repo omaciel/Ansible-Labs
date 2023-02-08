@@ -2,7 +2,7 @@
 
 OCI_TOOL=$(shell command -v podman || command -v docker)
 
-build-all-arch: test
+build-all-arch: lint
 	$(OCI_TOOL) buildx create --use
 	cd controller && $(OCI_TOOL) buildx build --push --platform linux/arm64,linux/amd64 -t quay.io/omaciel/ansible_lab_controller:latest .
 	cd ../host && $(OCI_TOOL) buildx build --push --platform linux/arm64,linux/amd64 -t quay.io/omaciel/ansible_lab_host:latest .
