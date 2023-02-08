@@ -8,6 +8,8 @@ services:
     hostname: controller
     networks:
       - ansible-net
+    volumes:
+      - ansible-lab-work:/root/ansible_lab_work
 
   host01:
     image: quay.io/omaciel/ansible_lab_host:latest
@@ -25,5 +27,6 @@ services:
 
 networks:
   ansible-net:
-    attachable: false
-    driver: host
+
+volumes:
+  ansible-lab-work:

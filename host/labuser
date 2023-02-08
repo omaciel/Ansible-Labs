@@ -1,1 +1,1 @@
-labuser ALL=(ALL) NOPASSWD:ALL ROLE=sysadm_r TYPE=sysadm_t ALL
+labuser ALL=(ALL) ROLE=sysadm_r TYPE=sysadm_t NOPASSWD:ALL
