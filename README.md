@@ -22,6 +22,6 @@ Attach to the 'controller' container
 
 Run a quick ad-hoc command against the 2 hosts
 
-    [root@controller ~]#ansible -i inventory -m ping
+    [root@controller ~]#ansible -i inventory all -m ping
 
 Detach from the 'controller' container by pressing CTRL-p followed by CTRL-q
