@@ -15,7 +15,7 @@ run:
 	$(OCI_TOOL)-compose up -d
 
 lint:
-	yamllint $(OCI_TOOL)-compose.yml 
+	yamllint docker-compose.yml 
 
 stop:
 	$(OCI_TOOL)-compose down
