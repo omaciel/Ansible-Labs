@@ -1,20 +1,31 @@
-.PHONY: all build-all-arch run stop
+.PHONY: all build-all-arch dev lint run stop
 
-build-all-arch:
-	docker buildx create --use
-	cd controller && docker buildx build --push --platform linux/arm64,linux/amd64 -t quay.io/omaciel/ansible_lab_controller:latest .
-	cd ../host && docker buildx build --push --platform linux/arm64,linux/amd64 -t quay.io/omaciel/ansible_lab_host:latest .
-	cd .. && docker buildx stop
+OCI_TOOL=$(shell command -v podman || command -v docker)
+
+build-all-arch: test
+	$(OCI_TOOL) buildx create --use
+	cd controller && $(OCI_TOOL) buildx build --push --platform linux/arm64,linux/amd64 -t quay.io/omaciel/ansible_lab_controller:latest .
+	cd ../host && $(OCI_TOOL) buildx build --push --platform linux/arm64,linux/amd64 -t quay.io/omaciel/ansible_lab_host:latest .
+	cd .. && $(OCI_TOOL) buildx stop
+
+dev:
+	pip3 install --user yamllint
+
 run:
-	docker-compose up -d
+	$(OCI_TOOL)-compose up -d
+
+lint:
+	yamllint $(OCI_TOOL)-compose.yml 
 
 stop:
-	docker-compose down
+	$(OCI_TOOL)-compose down
 
 help:
 	@echo "Please use \`make <target>' where <target> is one of:"
 	@echo ""
 	@echo "--- General Commands ---"
 	@echo "build-all-arch		Build and push new images to Quay.io."
-	@echo "run 					Spin up a lab with 1 controller and 2 hosts."
-	@echo "stop					Shuts down the lab."
+	@echo "dev			Install development tools and dependencies."
+	@echo "lint			Runs linter on docker-compose.yaml file."
+	@echo "run 			Spin up a lab with 1 controller and 2 hosts."
+	@echo "stop			Shuts down the lab."
