@@ -3,6 +3,7 @@ LABEL maintainer="Og Maciel <omaciel@redhat.com>"
 
 RUN yum check-update; \
     yum install -y gcc libffi-devel python3; \
+    yum install -y git vim-common; \
     yum install -y python3-pip; \
     yum install -y wget openssh-server openssh-clients; \
     yum clean all
