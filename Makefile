@@ -12,7 +12,7 @@ dev:
 	pip3 install --user yamllint
 
 run:
-	$(OCI_TOOL)-compose up -d
+	$(OCI_TOOL)-compose up --pull=always -d
 
 lint:
 	yamllint docker-compose.yml 
