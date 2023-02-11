@@ -5,7 +5,7 @@ RUN yum check-update; \
     yum install -y gcc libffi-devel python3; \
     yum install -y git vim-enhanced jq; \
     yum install -y python3-pip; \
-    yum install -y wget openssh-server openssh-clients; \
+    yum install -y iproute wget openssh-server openssh-clients; \
     yum clean all
 
 RUN pip3 install --upgrade pip; \
