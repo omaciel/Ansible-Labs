@@ -7,6 +7,7 @@ build-all-arch: lint
 	cd controller && $(OCI_TOOL) buildx build --push --platform linux/arm64,linux/amd64 -t quay.io/omaciel/ansible_lab_controller:latest .
 	cd host && $(OCI_TOOL) buildx build --push --platform linux/arm64,linux/amd64 -t quay.io/omaciel/ansible_lab_host:latest .
 	$(OCI_TOOL) buildx stop
+	$(OCI_TOOL) buildx rm
 
 dev:
 	pip3 install --user yamllint
