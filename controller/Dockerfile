@@ -1,4 +1,4 @@
-FROM fedora:38
+FROM fedora:41
 LABEL maintainer="Og Maciel <omaciel@redhat.com>"
 
 RUN yum check-update; \

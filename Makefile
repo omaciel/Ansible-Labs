@@ -10,12 +10,12 @@ build-all-arch: lint
 	$(OCI_TOOL) buildx rm
 
 dev:
-	pip3 install --user yamllint
+	pip3 install yamllint
 
 run:
 	$(OCI_TOOL)-compose up --pull=always -d
 
-lint:
+lint: dev
 	yamllint docker-compose.yml 
 
 stop:
