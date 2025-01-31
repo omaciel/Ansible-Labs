@@ -1,0 +1,60 @@
+---
+- name: Use blocks to install nginx
+  hosts: all
+  gather_facts: true
+  become: true
+  vars:
+    owners_name: Og Maciel
+    web_path: /home/webserver
+
+  tasks:
+  - name: Block for Fedora hosts
+    when: "'Fedora' in ansible_facts['distribution']"
+    block:
+    - name: Install nginx
+      ansible.builtin.dnf:
+        name: nginx
+        state: present
+    - name: Handle the ngix server
+      when: "'docker' not in ansible_facts['virtualization_type']"
+      block:
+      - name: Start and enable nginx
+        ansible.builtin.systemd:
+          name: nginx
+          state: started
+          enabled: true
+    - name: Create /home/webserver directory
+      ansible.builtin.file:
+        path: "{{ web_path }}"
+        state: directory
+        owner: nginx
+        group: nginx
+        mode: '0755'
+    - name: Add index.html to /home/webserver
+      ansible.builtin.template:
+        src: templates/index.html.j2
+        dest: "{{ web_path }}/index.html"
+        owner: nginx
+        group: nginx
+        mode: '0644'
+    - name: Add nginx configuration based on template
+      ansible.builtin.template:
+        src: templates/nginx.conf.j2
+        dest: "/etc/nginx/nginx.conf"
+        owner: nginx
+        group: nginx
+        mode: '0644'
+      register: nginx_config
+    - name: Restart nginx when configuration is changed
+      when: nginx_config.changed
+      ansible.builtin.service:
+        name: nginx
+        state: restarted
+  - name: Block for Ubuntu hosts
+    when: "'Ubuntu' in ansible_facts['distribution']"
+    block:
+    - name: Install nginx
+      ansible.builtin.dnf:
+        name: nginx
+        state: present
+  

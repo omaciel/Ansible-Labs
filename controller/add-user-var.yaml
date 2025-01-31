@@ -1,0 +1,14 @@
+---
+- name: Add user to a system
+  hosts: all
+  gather_facts: false
+  vars_files:
+    - files/users.yaml
+
+  tasks:
+  - name: Add users to my hosts
+    ansible.builtin.user:
+      name: "{{ item }}"
+      state: present
+    become: true
+    loop: "{{ new_user }}"

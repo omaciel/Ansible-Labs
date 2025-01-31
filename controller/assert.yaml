@@ -1,0 +1,20 @@
+---
+- name: Check RAM on a host
+  hosts: all
+  gather_facts: true
+  vars:
+      
+  tasks:
+    - name: Display ansible_memtotal_mb
+      ansible.builtin.debug:
+        var: ansible_memtotal_mb
+    
+    - name: Assert if RAM is at least 1GB
+      ansible.builtin.assert:
+        that: ansible_memtotal_mb >= 1000
+        msg: "RAM is less than 1GB"
+
+    - name: Assert if RAM is at least 10GB
+      ansible.builtin.assert:
+        that: ansible_memtotal_mb >= 10000
+        msg: "RAM is less than 10GB"

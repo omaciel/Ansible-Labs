@@ -1,0 +1,29 @@
+---
+- name: Quick webserver install and configure
+  hosts: all
+  gather_facts: true
+  become: true
+
+  tasks:
+  - name: Block for Fedora hosts
+    when: "'Fedora' in ansible_facts['distribution']"
+    block:
+    - name: Install apache server
+      ansible.builtin.dnf:
+        name: httpd
+        state: present
+
+    - name: Handle the apache server
+      when: "'docker' not in ansible_facts['virtualization_type']"
+      block:
+      - name: Start and enable apache
+        ansible.builtin.service:
+          name: httpd
+          state: started
+          enabled: true
+
+  - name: Write a simple index.html
+    ansible.builtin.lineinfile:
+      path: /var/www/html/index.html
+      line: "<h1>Hello, Lightspeed!</h1>"
+      create: true

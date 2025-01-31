@@ -24,4 +24,24 @@ Run a quick ad-hoc command against the 2 hosts
 
     [root@controller ~]#ansible -i inventory all -m ping
 
+Run one of the provided sample playbooks against the 2 hosts
+
+    [root@controller ~]# ansible-playbook add-user-var.yaml 
+
+    PLAY [Add user to a system] ***************************************************************************************************************************************************************
+
+    TASK [Add users to my hosts] **************************************************************************************************************************************************************
+    changed: [host01] => (item=Homer)
+    changed: [host02] => (item=Homer)
+    changed: [host01] => (item=Marge)
+    changed: [host02] => (item=Marge)
+    changed: [host01] => (item=Bart)
+    changed: [host02] => (item=Bart)
+    changed: [host02] => (item=Lisa)
+    changed: [host01] => (item=Lisa)
+
+    PLAY RECAP ********************************************************************************************************************************************************************************
+    host01                     : ok=1    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+    host02                     : ok=1    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0  
+
 Detach from the 'controller' container by pressing CTRL-p followed by CTRL-q
