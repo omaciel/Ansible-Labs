@@ -11,7 +11,7 @@ RUN yum check-update; \
 RUN pip3 install --upgrade pip; \
     pip3 install --upgrade virtualenv; \
     pip3 install ansible-lint requests yamllint; \
-    python3 -m pip install ansible;
+    python3 -m pip install ansible ansible-dev-tools;
 
 RUN mkdir -p /var/run/sshd
 RUN ssh-keygen -A
