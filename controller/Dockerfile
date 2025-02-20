@@ -2,7 +2,7 @@ FROM fedora:41
 LABEL maintainer="Og Maciel <omaciel@redhat.com>"
 
 RUN yum check-update; \
-    yum install -y gcc libffi-devel python3; \
+    yum install -y gcc libffi-devel python3 python3-devel oniguruma-devel; \
     yum install -y git vim-enhanced jq; \
     yum install -y python3-pip; \
     yum install -y iproute wget openssh-server openssh-clients; \
